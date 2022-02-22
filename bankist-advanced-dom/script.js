@@ -77,3 +77,40 @@ document.querySelector(".btn--close-cookie").addEventListener("click", () => {
   //old method:
   // message.parentElement.removeChild(message);
 });
+
+//STYLES --will be inline styles!!!
+message.style.backgroundColor = "#37383d"; //camelCase
+message.style.width = "120%";
+
+console.log(message.style.color); //won't display anything,because it is not an inline style
+console.log(getComputedStyle(message).color); //result will be STRING
+
+message.style.height =
+  Number.parseFloat(getComputedStyle(message).height) + 30 + "px";
+
+//css custom properties(variables)
+// :root {} in css
+document.documentElement.style.setProperty("--color-primary", "orangered");
+
+//attributes
+const logo = document.querySelector("#logo");
+console.log(logo.alt);
+console.log(logo.className);
+
+logo.alt = "Beautiful image";
+console.log(logo.alt);
+
+console.log(logo.designer); // won't work like this, not standard attribute
+console.log(logo.getAttribute("designer"));
+console.log(logo.src); //absolute path
+console.log(logo.getAttribute("src")); //relative path
+logo.setAttribute("company", "Bankist");
+
+//data attributes - start with data-
+console.log(logo.dataset.versionNumber);
+
+//classes
+logo.classList.add("mylogo", "mylogo2");
+logo.classList.remove("mylogo");
+logo.classList.toggle("mylogo");
+console.log(logo.classList.contains("mylogo"));
