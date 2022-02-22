@@ -114,3 +114,34 @@ logo.classList.add("mylogo", "mylogo2");
 logo.classList.remove("mylogo");
 logo.classList.toggle("mylogo");
 console.log(logo.classList.contains("mylogo"));
+
+//SCROLL
+const btnScrollto = document.querySelector(".btn--scroll-to");
+const section1 = document.querySelector("#section--1");
+
+btnScrollto.addEventListener("click", (e) => {
+  //get coordinates for section 1
+  const s1coords = section1.getBoundingClientRect();
+  console.log("S1 coords:", s1coords); //relative to the viewport
+  console.log(e.target.getBoundingClientRect());
+  console.log("Current scroll, X/Y:", window.pageXOffset, window.pageYOffset);
+  console.log(
+    "Height/width viewport:",
+    document.documentElement.clientHeight,
+    document.documentElement.clientWidth
+  );
+
+  //scrolling
+  // window.scrollTo(
+  //   s1coords.left + window.pageXOffset,
+  //   s1coords.top + window.pageYOffset
+  // ); //absolute, measured from top of page
+
+  // window.scrollTo({
+  //   left: s1coords.left + window.pageXOffset,
+  //   top: s1coords.top + window.pageYOffset,
+  //   behavior: "smooth",
+  // });
+
+  section1.scrollIntoView({ behavior: "smooth", block: "start" });
+});
