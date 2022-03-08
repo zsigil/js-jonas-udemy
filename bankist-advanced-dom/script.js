@@ -161,3 +161,39 @@ h1.addEventListener("mouseenter", alertH1); //better, can be removed
 setTimeout(() => {
   h1.removeEventListener("mouseenter", alertH1);
 }, 10000);
+
+//rgb(255,255,255)
+
+const randomInt = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+};
+
+const randomColor = () => {
+  return `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`;
+};
+
+// arrow functions won't give you 'this'
+
+document.querySelector(".nav__link").addEventListener("click", function (e) {
+  this.style.backgroundColor = randomColor();
+  console.log("LINK", e.target);
+  console.log(this === e.currentTarget); //true
+
+  //stop propagation - usually not a good idea
+  // e.stopPropagation();
+});
+
+document.querySelector(".nav__links").addEventListener("click", function (e) {
+  this.style.backgroundColor = randomColor();
+  console.log("LINKS", e.target, e.currentTarget); //e.target is the link itself!!!
+});
+
+document.querySelector(".nav").addEventListener(
+  "click",
+  function (e) {
+    this.style.backgroundColor = randomColor();
+    console.log("NAV", e.target, e.currentTarget); //e.target is the link itself!!!
+  },
+  //true //listening in capturing phase (backwards!!!),
+  false
+);
