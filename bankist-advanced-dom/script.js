@@ -173,6 +173,35 @@ document.querySelector(".nav__links").addEventListener("click", function (e) {
   // if (id) document.querySelector(id).scrollIntoView({ behavior: "smooth" });
 });
 
+//DOM traversing
+
+const h1 = document.querySelector("h1");
+
+//going downwards : child/children
+console.log(h1.querySelectorAll(".highlight")); //deepness does not matter
+console.log(h1.childNodes); // all direct childnodes - text,comment,elements
+console.log(h1.children); // all direct children html elements, LIVE collection!
+console.log(h1.firstChild);
+h1.firstElementChild.style.color = "white";
+h1.lastElementChild.style.color = "orangered";
+
+//going upwards : parents
+console.log(h1.parentNode); //direct
+console.log(h1.parentElement); //direct
+console.log(h1.closest(".header"));
+
+//going sideways -- direct siblings
+console.log(h1.previousElementSibling);
+console.log(h1.nextElementSibling);
+console.log(h1.parentElement.children); //all siblings
+
+//all siblings except for original element
+[...h1.parentElement.children].forEach((el) => {
+  if (el != h1) {
+    //el.style.transform = "scale(0.5)";
+  }
+});
+
 // const h1 = document.querySelector("h1");
 
 // const alertH1 = (e) => {
