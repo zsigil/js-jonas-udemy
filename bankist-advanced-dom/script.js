@@ -146,6 +146,33 @@ btnScrollto.addEventListener("click", (e) => {
   section1.scrollIntoView({ behavior: "smooth", block: "start" });
 });
 
+//PAGE NAVIGATION
+
+//bad version - performance issues!!
+
+// document.querySelectorAll(".nav__link").forEach(function (el) {
+//   el.addEventListener("click", function (e) {
+//     e.preventDefault();
+//     const id = this.getAttribute("href");
+//     console.log(id);
+//     document
+//       .querySelector(id)
+//       .scrollIntoView({ behavior: "smooth", block: "start" });
+//   });
+// });
+
+//good version with event delegation - event listener on common parent
+
+document.querySelector(".nav__links").addEventListener("click", function (e) {
+  e.preventDefault();
+  const id = e.target.getAttribute("href");
+
+  if (e.target.classList.contains("nav__link"))
+    document.querySelector(id).scrollIntoView({ behavior: "smooth" });
+
+  // if (id) document.querySelector(id).scrollIntoView({ behavior: "smooth" });
+});
+
 // const h1 = document.querySelector("h1");
 
 // const alertH1 = (e) => {
