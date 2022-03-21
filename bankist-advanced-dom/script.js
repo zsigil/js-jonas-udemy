@@ -115,7 +115,7 @@ logo.classList.remove("mylogo");
 logo.classList.toggle("mylogo");
 console.log(logo.classList.contains("mylogo"));
 
-//SCROLL
+//LEARN MORE SCROLL BUTTON
 const btnScrollto = document.querySelector(".btn--scroll-to");
 const section1 = document.querySelector("#section--1");
 
@@ -146,54 +146,54 @@ btnScrollto.addEventListener("click", (e) => {
   section1.scrollIntoView({ behavior: "smooth", block: "start" });
 });
 
-const h1 = document.querySelector("h1");
+// const h1 = document.querySelector("h1");
 
-const alertH1 = (e) => {
-  alert("addeventlistener");
-};
+// const alertH1 = (e) => {
+//   alert("addeventlistener");
+// };
 
-h1.addEventListener("mouseenter", alertH1); //better, can be removed
+// h1.addEventListener("mouseenter", alertH1); //better, can be removed
 
-// h1.onmouseenter = (e) => {
-//   alert("onmouseenter");
-// }; // old way
+// // h1.onmouseenter = (e) => {
+// //   alert("onmouseenter");
+// // }; // old way
 
-setTimeout(() => {
-  h1.removeEventListener("mouseenter", alertH1);
-}, 10000);
+// setTimeout(() => {
+//   h1.removeEventListener("mouseenter", alertH1);
+// }, 10000);
 
-//rgb(255,255,255)
+// //rgb(255,255,255)
 
-const randomInt = (min, max) => {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-};
+// const randomInt = (min, max) => {
+//   return Math.floor(Math.random() * (max - min + 1) + min);
+// };
 
-const randomColor = () => {
-  return `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`;
-};
+// const randomColor = () => {
+//   return `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`;
+// };
 
-// arrow functions won't give you 'this'
+// // arrow functions won't give you 'this'
 
-document.querySelector(".nav__link").addEventListener("click", function (e) {
-  this.style.backgroundColor = randomColor();
-  console.log("LINK", e.target);
-  console.log(this === e.currentTarget); //true
+// document.querySelector(".nav__link").addEventListener("click", function (e) {
+//   this.style.backgroundColor = randomColor();
+//   console.log("LINK", e.target);
+//   console.log(this === e.currentTarget); //true
 
-  //stop propagation - usually not a good idea
-  // e.stopPropagation();
-});
+//   //stop propagation - usually not a good idea
+//   // e.stopPropagation();
+// });
 
-document.querySelector(".nav__links").addEventListener("click", function (e) {
-  this.style.backgroundColor = randomColor();
-  console.log("LINKS", e.target, e.currentTarget); //e.target is the link itself!!!
-});
+// document.querySelector(".nav__links").addEventListener("click", function (e) {
+//   this.style.backgroundColor = randomColor();
+//   console.log("LINKS", e.target, e.currentTarget); //e.target is the link itself!!!
+// });
 
-document.querySelector(".nav").addEventListener(
-  "click",
-  function (e) {
-    this.style.backgroundColor = randomColor();
-    console.log("NAV", e.target, e.currentTarget); //e.target is the link itself!!!
-  },
-  //true //listening in capturing phase (backwards!!!),
-  false
-);
+// document.querySelector(".nav").addEventListener(
+//   "click",
+//   function (e) {
+//     this.style.backgroundColor = randomColor();
+//     console.log("NAV", e.target, e.currentTarget); //e.target is the link itself!!!
+//   },
+//   //true //listening in capturing phase (backwards!!!),
+//   false
+// );
