@@ -199,6 +199,28 @@ tabsContainer.addEventListener("click", function (e) {
   content.classList.add("operations__content--active");
 });
 
+//MENU fade animation
+const nav = document.querySelector(".nav");
+
+const linkHoverHandler = function (e) {
+  if (e.target.classList.contains("nav__link")) {
+    const link = e.target;
+    const siblings = link.closest(".nav").querySelectorAll(".nav__link");
+    const logo = link.closest(".nav").querySelector("img");
+
+    siblings.forEach((el) => {
+      if (el != link) {
+        el.style.opacity = this;
+      }
+    });
+    logo.style.opacity = this;
+  }
+};
+//passing arguments to event handlers
+nav.addEventListener("mouseover", linkHoverHandler.bind(0.5)); //mouseenter does NOT bubble
+//or
+nav.addEventListener("mouseout", linkHoverHandler.bind(1));
+
 //DOM traversing
 
 const h1 = document.querySelector("h1");
