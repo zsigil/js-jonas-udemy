@@ -221,8 +221,22 @@ nav.addEventListener("mouseover", linkHoverHandler.bind(0.5)); //mouseenter does
 //or
 nav.addEventListener("mouseout", linkHoverHandler.bind(1));
 
-//DOM traversing
+//sticky navigation - scroll event
 
+const { top: section1Top } = section1.getBoundingClientRect();
+console.log(section1Top);
+
+//listening to scroll event is bad practice, performance issues!!!!
+window.addEventListener("scroll", () => {
+  console.log(window.scrollY); // depends on viewport!
+  if (window.scrollY > section1Top) {
+    nav.classList.add("sticky");
+  } else {
+    nav.classList.remove("sticky");
+  }
+});
+
+//DOM traversing
 const h1 = document.querySelector("h1");
 
 //going downwards : child/children
