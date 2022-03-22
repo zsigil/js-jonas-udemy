@@ -227,14 +227,48 @@ const { top: section1Top } = section1.getBoundingClientRect();
 console.log(section1Top);
 
 //listening to scroll event is bad practice, performance issues!!!!
-window.addEventListener("scroll", () => {
-  console.log(window.scrollY); // depends on viewport!
-  if (window.scrollY > section1Top) {
+// window.addEventListener("scroll", () => {
+//   console.log(window.scrollY); // depends on viewport!
+//   if (window.scrollY > section1Top) {
+//     nav.classList.add("sticky");
+//   } else {
+//     nav.classList.remove("sticky");
+//   }
+// });
+
+//intersection observer API
+
+// const obsCallback = (entries, observer) => {
+//   console.log(entries);
+// };
+
+//target (section1) intersects the viewport with 10%:
+
+// const obsOptions = {
+//   root: null,
+//   threshold: 0.1,
+// };
+// const observer = new IntersectionObserver(obsCallback, obsOptions);
+// observer.observe(section1);
+
+// make navigation sticky,when header moves out completely
+const { height: navHeight } = nav.getBoundingClientRect();
+console.log(navHeight);
+
+const stickyNav = (entries, observer) => {
+  if (!entries[0].isIntersecting) {
     nav.classList.add("sticky");
   } else {
     nav.classList.remove("sticky");
   }
-});
+};
+const headerObsOptions = {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navHeight}px`,
+};
+const headerObserver = new IntersectionObserver(stickyNav, headerObsOptions);
+headerObserver.observe(header);
 
 //DOM traversing
 const h1 = document.querySelector("h1");
