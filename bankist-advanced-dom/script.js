@@ -309,26 +309,107 @@ const imgObserver = new IntersectionObserver(loadImg, {
 imageTargets.forEach((img) => {
   imgObserver.observe(img);
 });
+
+//BUILDING SLIDER
+//1. put stuff side by side
+const slides = document.querySelectorAll(".slide");
+const btnRight = document.querySelector(".slider__btn--right");
+const btnLeft = document.querySelector(".slider__btn--left");
+const dotContainer = document.querySelector(".dots");
+
+const createDots = () => {
+  slides.forEach((s, i) => {
+    dotContainer.insertAdjacentHTML(
+      "beforeend",
+      `<button class="dots__dot" data-slide="${i}"></button>`
+    );
+  });
+};
+
+createDots();
+
+let curSlide = 0;
+const maxSlide = slides.length - 1;
+
+const activateDot = (slide) => {
+  const dots = document.querySelectorAll(".dots__dot");
+  dots.forEach((d) => {
+    d.classList.remove("dots__dot--active");
+  });
+  // dots[slide].classList.add("dots__dot--active");
+  document
+    .querySelector(`.dots__dot[data-slide="${slide}"]`)
+    .classList.add("dots__dot--active");
+};
+
+const goToSlide = (slideIndex) => {
+  slides.forEach((slide, i) => {
+    slide.style.transform = `translateX(${(i - slideIndex) * 100}%)`;
+  });
+  activateDot(curSlide);
+};
+
+goToSlide(0);
+
+//next slide
+const nextSlide = () => {
+  if (curSlide == maxSlide) {
+    curSlide = 0;
+  } else {
+    curSlide++;
+  }
+  goToSlide(curSlide);
+};
+
+//previous slide
+const prevSlide = () => {
+  if (curSlide == 0) {
+    curSlide = maxSlide;
+  } else {
+    curSlide--;
+  }
+  goToSlide(curSlide);
+};
+
+btnRight.addEventListener("click", nextSlide);
+btnLeft.addEventListener("click", prevSlide);
+
+document.addEventListener("keydown", (e) => {
+  if (e.key == "ArrowLeft") {
+    prevSlide();
+  }
+  e.key == "ArrowRight" && nextSlide(); //short circuiting
+});
+
+//DOTS
+
+dotContainer.addEventListener("click", (e) => {
+  if (e.target.classList.contains("dots__dot")) {
+    curSlide = e.target.dataset.slide;
+    goToSlide(curSlide);
+  }
+});
+
 //DOM traversing
 const h1 = document.querySelector("h1");
 
 //going downwards : child/children
-console.log(h1.querySelectorAll(".highlight")); //deepness does not matter
-console.log(h1.childNodes); // all direct childnodes - text,comment,elements
-console.log(h1.children); // all direct children html elements, LIVE collection!
-console.log(h1.firstChild);
+// console.log(h1.querySelectorAll(".highlight")); //deepness does not matter
+// console.log(h1.childNodes); // all direct childnodes - text,comment,elements
+// console.log(h1.children); // all direct children html elements, LIVE collection!
+// console.log(h1.firstChild);
 h1.firstElementChild.style.color = "white";
 h1.lastElementChild.style.color = "orangered";
 
 //going upwards : parents
-console.log(h1.parentNode); //direct
-console.log(h1.parentElement); //direct
-console.log(h1.closest(".header"));
+// console.log(h1.parentNode); //direct
+// console.log(h1.parentElement); //direct
+// console.log(h1.closest(".header"));
 
 //going sideways -- direct siblings
-console.log(h1.previousElementSibling);
-console.log(h1.nextElementSibling);
-console.log(h1.parentElement.children); //all siblings
+// console.log(h1.previousElementSibling);
+// console.log(h1.nextElementSibling);
+// console.log(h1.parentElement.children); //all siblings
 
 //all siblings except for original element
 [...h1.parentElement.children].forEach((el) => {
