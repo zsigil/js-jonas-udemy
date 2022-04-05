@@ -27,3 +27,6 @@ Person.prototype.calcAge = function () {
 
 Person.prototype.species = "homo sapiens"; //jonas.species --common property!!
 console.log(jonas.hasOwnProperty("species")); //false
+console.log(jonas.__proto__); //Person.prototype
+console.log(jonas.__proto__.__proto__); //Object.prototype
+console.log(jonas.__proto__.__proto__.__proto__); //null
