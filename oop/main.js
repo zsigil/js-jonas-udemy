@@ -140,3 +140,26 @@ const account = {
 //use it as a property
 account.latest = 50;
 console.log(account.latest);
+
+//Object.create
+
+const PersonProto = {
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  },
+  //function name does not matter
+  initFunction(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
+};
+
+const steve = Object.create(PersonProto);
+steve.name = "Steven Boss";
+steve.birthYear = 1956;
+steve.calcAge();
+
+const sarah = Object.create(PersonProto);
+sarah.initFunction("Sarah Johns", 1987);
+sarah.calcAge();
+console.log(sarah);
