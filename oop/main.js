@@ -30,3 +30,12 @@ console.log(jonas.hasOwnProperty("species")); //false
 console.log(jonas.__proto__); //Person.prototype
 console.log(jonas.__proto__.__proto__); //Object.prototype
 console.log(jonas.__proto__.__proto__.__proto__); //null
+
+const arr = [2, 5, 8, 3, 1, 2, 2];
+
+//DO NOT DO THIS
+Array.prototype.unique = function () {
+  return [...new Set(this)];
+};
+
+console.log(arr.unique());
