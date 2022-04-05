@@ -31,6 +31,11 @@ console.log(jonas.__proto__); //Person.prototype
 console.log(jonas.__proto__.__proto__); //Object.prototype
 console.log(jonas.__proto__.__proto__.__proto__); //null
 
+//static method
+Person.hey = function () {
+  console.log("hey there");
+};
+
 const arr = [2, 5, 8, 3, 1, 2, 2];
 
 //DO NOT DO THIS
@@ -84,7 +89,7 @@ class PersonCl {
     this.birthYear = birthYear;
   }
 
-  //methods will be added to .prototype property
+  //methods will be added to .prototype property = instance methods, they will be inherited
   calcAge() {
     return 2021 - this.birthYear;
   }
@@ -103,6 +108,11 @@ class PersonCl {
 
   get fullName() {
     return this._fullName; //now we got rid of underscore
+  }
+
+  //STATIC METHOD
+  static hey() {
+    console.log("I am a static method");
   }
 }
 
