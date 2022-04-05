@@ -79,8 +79,8 @@ bmw.brake();
 //ES6 Classes
 
 class PersonCl {
-  constructor(firstName, birthYear) {
-    this.firstName = firstName;
+  constructor(fullName, birthYear) {
+    this.fullName = fullName;
     this.birthYear = birthYear;
   }
 
@@ -88,15 +88,45 @@ class PersonCl {
   calcAge() {
     return 2021 - this.birthYear;
   }
+  //getter
+  get age() {
+    return 2021 - this.birthYear;
+  }
+
+  //for fullname validation, we need a setter and a getter
+  set fullName(name) {
+    console.log(name);
+    if (name.includes(" ")) {
+      this._fullName = name; // underscore is needed (convention), we need another variable
+    } else alert("not full name");
+  }
+
+  get fullName() {
+    return this._fullName; //now we got rid of underscore
+  }
 }
 
-const jessica = new PersonCl("Jessica", 1990);
+const jessica = new PersonCl("Jessica Brown", 1990);
 
 //this will also work
 PersonCl.prototype.greet = function () {
-  console.log(`hey, I am ${this.firstName}`);
+  console.log(`hey, I am ${this.fullName}`);
 };
 
 // 1. Classes are not hoisted
 // 2. classes are first -class citizens
 // 3. the body of a class is always executed in strict mode
+
+const account = {
+  owner: "Jonas",
+  movements: [200, -150, 230, 500],
+  get latest() {
+    return this.movements.slice(-1).pop();
+  },
+  set latest(movement) {
+    this.movements.push(movement);
+  },
+};
+//use it as a property
+account.latest = 50;
+console.log(account.latest);
