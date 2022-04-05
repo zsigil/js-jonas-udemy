@@ -52,6 +52,7 @@ DATA CAR 2: 'Mercedes' going at 95 km/h
 GOOD LUCK 😀
 */
 
+/*
 const Car = function (make, speed) {
   this.make = make;
   this.speed = speed;
@@ -73,3 +74,29 @@ const mercedes = new Car("mercedes", 95);
 bmw.accelerate();
 bmw.accelerate();
 bmw.brake();
+*/
+
+//ES6 Classes
+
+class PersonCl {
+  constructor(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  }
+
+  //methods will be added to .prototype property
+  calcAge() {
+    return 2021 - this.birthYear;
+  }
+}
+
+const jessica = new PersonCl("Jessica", 1990);
+
+//this will also work
+PersonCl.prototype.greet = function () {
+  console.log(`hey, I am ${this.firstName}`);
+};
+
+// 1. Classes are not hoisted
+// 2. classes are first -class citizens
+// 3. the body of a class is always executed in strict mode
