@@ -201,3 +201,33 @@ class CarClass {
 }
 
 const trabant = new CarClass("Trabant", 20);
+
+//Inheritance between classes - constructor functions
+const PersonParent = function (firstName, birthYear) {
+  //instance properties
+  this.firstName = firstName;
+  this.birthYear = birthYear;
+};
+
+PersonParent.prototype.calcAge = function () {
+  console.log(2037 - this.birthYear);
+};
+
+const Student = function (firstName, birthYear, course) {
+  PersonParent.call(this, firstName, birthYear); //this way, we have 'this'
+  this.course = course;
+};
+
+//!LINKING PROTOTYPES
+// we need this connection here, otherwise we do not inherit methods
+Student.prototype = Object.create(PersonParent.prototype); //not exactly the same object, but we inherit from it
+Student.prototype.constructor = Student;
+
+const mike = new Student("Mike", 2010, "computer science");
+console.log(mike);
+
+Student.prototype.introduce = function () {
+  console.log(`Hi, my name is ${this.firstName}, and I study ${this.course}`);
+};
+mike.introduce();
+mike.calcAge();
