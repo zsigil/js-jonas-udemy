@@ -262,3 +262,23 @@ EV.prototype.accelerate = function () {
 };
 
 const tesla = new EV("Tesla", 120, 23);
+
+//Inheritance between ES6 classes
+class StudentCl extends PersonCl {
+  // if we do not have other properties, constructor is not even necessary
+  constructor(fullName, birthYear, course) {
+    //needs to happen first
+    super(fullName, birthYear);
+    this.course = course;
+  }
+  introduce() {
+    console.log(`Hi, my name is ${this.fullName}, and I study ${this.course}`);
+  }
+
+  //overwriting calcAge method
+  calcAge() {
+    console.log("I am old");
+  }
+}
+
+const martha = new StudentCl("Martha Locky", 1995, "computer science");
