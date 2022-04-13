@@ -284,27 +284,43 @@ class StudentCl extends PersonCl {
 const martha = new StudentCl("Martha Locky", 1995, "computer science");
 
 //Another class example
+
+//public fields
+//private fields
+//public methods
+//private methods
+//+ static versions
+
 class Account {
+  //public fields (instances)
+  locale = navigator.language;
+
+  //private fields
+  #movements = [];
+  #pin;
+
   constructor(owner, currency, pin) {
     this.owner = owner;
     this.currency = currency;
-    this._pin = pin;
-    this._movements = []; //simulating privacy by convention = protected, still can be manipulated!
-    this.locale = navigator.language;
+    this.#pin = pin;
+    // this._movements = []; //simulating privacy by convention = protected, still can be manipulated!
+    // this.locale = navigator.language;
   }
 
-  _approveLoan(val) {
+  //private methods
+  #approveLoan(val) {
     return true;
   }
 
   //PUBLIC INTERFACE
+  //public methods
 
   getMovements() {
-    return this._movements;
+    return this.#movements;
   }
 
   deposit(val) {
-    this._movements.push(val);
+    this.#movements.push(val);
   }
 
   withdraw(val) {
@@ -312,7 +328,7 @@ class Account {
   }
 
   requestLoan(val) {
-    if (this._approveLoan) {
+    if (this.#approveLoan) {
       this.deposit(val);
       console.log("Loan approved");
     }
@@ -328,4 +344,5 @@ console.log(account1);
 
 account1.deposit(300);
 account1.withdraw(80);
+account1.requestLoan(1000);
 console.log(account1);
