@@ -282,3 +282,45 @@ class StudentCl extends PersonCl {
 }
 
 const martha = new StudentCl("Martha Locky", 1995, "computer science");
+
+//Another class example
+class Account {
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    this.pin = pin;
+    this.movements = [];
+    this.locale = navigator.language;
+  }
+
+  //PUBLIC INTERFACE
+  deposit(val) {
+    this.movements.push(val);
+  }
+
+  withdraw(val) {
+    this.deposit(-val);
+  }
+
+  approveLoan(val) {
+    return true;
+  }
+
+  requestLoan(val) {
+    if (this.approveLoan) {
+      this.deposit(val);
+      console.log("Loan approved");
+    }
+  }
+}
+
+const account1 = new Account("Jonas", "EUR", 1234);
+console.log(account1);
+
+//bad practice, use methods to interact with these properties!!!
+account1.movements.push(250);
+account1.movements.push(-140);
+
+account1.deposit(300);
+account1.withdraw(80);
+console.log(account1);
