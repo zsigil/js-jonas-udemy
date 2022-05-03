@@ -24,17 +24,29 @@ if (navigator.geolocation) {
           '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       }).addTo(map);
 
-      L.marker([latitude, longitude])
-        .addTo(map)
-        .bindPopup("A pretty CSS3 popup.<br> Easily customizable.")
-        .openPopup();
+      map.on("click", function (mapEvent) {
+        const { lat, lng } = mapEvent.latlng;
+        L.marker([lat, lng])
+          .addTo(map)
+          .bindPopup(
+            L.popup({
+              maxWidth: 250,
+              minWidth: 100,
+              autoClose: false,
+              closeOnClick: false,
+              className: "running-popup",
+            })
+          )
+          .setPopupContent("Workout")
+          .openPopup();
 
-      const circle = L.circle([latitude, longitude], {
-        color: "red",
-        fillColor: "#f03",
-        fillOpacity: 0.5,
-        radius: 500,
-      }).addTo(map);
+        const circle = L.circle([lat, lng], {
+          color: "red",
+          fillColor: "#f03",
+          fillOpacity: 0.3,
+          radius: 500,
+        }).addTo(map);
+      });
     },
     function () {
       alert("Could not get your position");
