@@ -48,7 +48,7 @@ class Workout {
 
   click() {
     this.clicks += 1;
-    console.log(this.clicks);
+    // console.log(this.clicks);
   }
 }
 
@@ -88,8 +88,8 @@ class Cycling extends Workout {
 
 const run1 = new Running([39, -12], 5.2, 24, 178);
 const cycling1 = new Cycling([39, -12], 27, 95, 523);
-console.log(run1);
-console.log(cycling1);
+// console.log(run1);
+// console.log(cycling1);
 //////////////////////////////////////////////////
 //APPLICATION ARCHITECTURE
 class App {
@@ -105,6 +105,8 @@ class App {
     form.addEventListener("submit", this._newWorkout.bind(this));
     inputType.addEventListener("change", this._toggleElevationField);
     containerWorkouts.addEventListener("click", this._moveToPopup.bind(this));
+    //load localStorage
+    this._getLocalStorage();
   }
 
   _getPosition() {
@@ -131,6 +133,9 @@ class App {
 
     //handling clicks on map
     this.#map.on("click", this._showForm.bind(this));
+    this.#workouts.forEach((wo) => {
+      this._renderWorkoutMarker(wo);
+    });
   }
 
   _showForm(e) {
@@ -157,6 +162,17 @@ class App {
   _toggleElevationField() {
     inputElevation.closest(".form__row").classList.toggle("form__row--hidden");
     inputCadence.closest(".form__row").classList.toggle("form__row--hidden");
+  }
+
+  _setLocalStorage() {
+    localStorage.setItem("workouts", JSON.stringify(this.#workouts));
+  }
+  _getLocalStorage() {
+    this.#workouts = JSON.parse(localStorage.getItem("workouts")) ?? []; //prototype chain will be broken!!!
+    this.#workouts.forEach((wo) => {
+      this._renderWorkout(wo);
+      //#map is not defined at this point, we cannot render markers yet!
+    });
   }
 
   _renderWorkoutMarker(workout) {
@@ -279,6 +295,9 @@ class App {
 
     //hide form
     this._hideForm();
+
+    //set all workouts in local storage
+    this._setLocalStorage();
   }
 
   _moveToPopup(e) {
@@ -293,7 +312,12 @@ class App {
     });
 
     //use public interface of workout class
-    workout.click();
+    // workout.click();
+  }
+
+  reset() {
+    localStorage.removeItem("workouts");
+    location.reload();
   }
 }
 
