@@ -91,6 +91,15 @@ const getCountryAndNeighbour = (country) => {
 
 getCountryAndNeighbour("usa");
 
+const getJSON = (url, errormsg='Something went wrong.') => {
+  return fetch(url)
+    .then(response => {
+      if (!response.ok) { // if response.ok is false
+        throw new Error(`${errormsg}: ${response.status}`)
+      }
+      return response.json()
+    })
+}
 
 //fetch API -- fetch returns Promise
 
@@ -129,10 +138,25 @@ const getCountryDataFetch = (country) => {
   .finally(()=>{console.log('finally');})
 }
 
+const getCountryWithHelper = (country) => {
+  getJSON(`https://restcountries.com/v3.1/name/${country}`, 'Country not found :(')
+   .then((data) => {
+      renderCountry(data[0])
+      const neighbour = data[0].borders?.[0]
+      if (!neighbour) throw new Error('no neighbor found');
+      return getJSON(`https://restcountries.com/v3.1/alpha/${neighbour}`, 'Neighbour not found')
+   })
+    .then(data => renderCountry(data[0], "neighbour"))
+    .catch(err => {
+      console.error(err)
+      renderError(`OOps, something went wrong: ${err.message}`)
+    })
+}
 
 
 btn.addEventListener('click', () => {
-  getCountryDataFetch('austria')
+  // getCountryDataFetch('austria')
+  getCountryWithHelper('australia')
 })
 
 // getCountryDataFetch('xyxyxy'); //fetch only rejects when there is no internet connection!
