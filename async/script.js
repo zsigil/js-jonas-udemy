@@ -11,7 +11,7 @@ const getCountry = (country) => {
   request.send();
   request.addEventListener("load", function () {
     const [data] = JSON.parse(this.responseText);
-    console.log(data);
+    // console.log(data);
 
     const html = `        
         <article class="country">
@@ -69,7 +69,7 @@ const getCountryAndNeighbour = (country) => {
   request.send();
   request.addEventListener("load", function () {
     const [data] = JSON.parse(this.responseText);
-    console.log(data);
+    // console.log(data);
 
     //render country 1
     renderCountry(data);
@@ -90,3 +90,17 @@ const getCountryAndNeighbour = (country) => {
 };
 
 getCountryAndNeighbour("usa");
+
+
+//fetch API -- fetch returns Promise
+
+const requestFetch = fetch(`https://restcountries.com/v3.1/name/portugal`)
+// console.log(requestFetch);
+
+const getCountryDataFetch = (country) => {
+  fetch(`https://restcountries.com/v3.1/name/${country}`)
+    .then((response) => response.json())
+    .then((data) => renderCountry(data[0]))
+}
+
+getCountryDataFetch('austria')
