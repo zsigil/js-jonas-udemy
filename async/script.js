@@ -72,7 +72,7 @@ const getCountryAndNeighbour = (country) => {
     // console.log(data);
 
     //render country 1
-    renderCountry(data);
+    // renderCountry(data);
 
     //get neighbour country (2)
     const neighbour = data.borders?.[0]; //works with countries with no borders
@@ -84,7 +84,7 @@ const getCountryAndNeighbour = (country) => {
     request.send();
     request.addEventListener("load", function () {
       const [data] = JSON.parse(this.responseText);
-      renderCountry(data, "neighbour");
+      // renderCountry(data, "neighbour");
     });
   });
 };
@@ -94,6 +94,10 @@ getCountryAndNeighbour("usa");
 
 //fetch API -- fetch returns Promise
 
+const renderError = (msg) => {
+  countriesContainer.insertAdjacentText('beforeend', msg)
+  countriesContainer.style.opacity = 1;
+}
 const requestFetch = fetch(`https://restcountries.com/v3.1/name/portugal`)
 // console.log(requestFetch);
 
@@ -107,8 +111,18 @@ const getCountryDataFetch = (country) => {
       return fetch(`https://restcountries.com/v3.1/alpha/${neighbour}`)
     })
     .then(res => res.json())
-    .then(data=>renderCountry(data[0], "neighbour"))
+    .then(data => renderCountry(data[0], "neighbour"))
+    .catch(err => {
+      console.error(err)
+      renderError(`OOps, something went wrong: ${err.message}`)
+    })
+  .finally(()=>{console.log('finally');})
 }
 
 
-getCountryDataFetch('austria')
+
+btn.addEventListener('click', () => {
+  getCountryDataFetch('austria')
+})
+
+getCountryDataFetch('xyxyxy'); //fetch only rejects when there is no internet connection!
