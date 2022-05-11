@@ -103,14 +103,24 @@ const requestFetch = fetch(`https://restcountries.com/v3.1/name/portugal`)
 
 const getCountryDataFetch = (country) => {
   fetch(`https://restcountries.com/v3.1/name/${country}`)
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) { // if response.ok is false
+        throw new Error(`Country not found, status ${response.status}`)
+      }
+      return response.json()
+    })
     .then((data) => {
       renderCountry(data[0])
       const neighbour = data[0].borders?.[0]
       if (!neighbour) return;
-      return fetch(`https://restcountries.com/v3.1/alpha/${neighbour}`)
+      return fetch(`https://restcountries.com/v3.1/alpha/${neighbour}x`)
     })
-    .then(res => res.json())
+    .then(res => {
+      if (!res.ok) { // if response.ok is false
+        throw new Error(`Neighbour not found, status ${res.status}`)
+      }
+      return res.json()
+    })
     .then(data => renderCountry(data[0], "neighbour"))
     .catch(err => {
       console.error(err)
@@ -125,4 +135,4 @@ btn.addEventListener('click', () => {
   getCountryDataFetch('austria')
 })
 
-getCountryDataFetch('xyxyxy'); //fetch only rejects when there is no internet connection!
+// getCountryDataFetch('xyxyxy'); //fetch only rejects when there is no internet connection!
