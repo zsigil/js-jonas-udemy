@@ -192,11 +192,11 @@ const whereAmI = (lat, lng) => {
       return res.json()
     })
     .then((data) => {
-      console.log(data);
-      console.log(`You are in ${data?.city ?? ''}, ${data?.country ?? 'unknown territory'}`);
+      // console.log(data);
+      // console.log(`You are in ${data?.city ?? ''}, ${data?.country ?? 'unknown territory'}`);
     })
     .catch((err) => {
-    console.log(`OOps, something terrible happened`)
+    // console.log(`OOps, something terrible happened`)
   })
 }
 
@@ -204,3 +204,17 @@ const whereAmI = (lat, lng) => {
 // whereAmI(19.037, 72.873)
 whereAmI(190.037, 272.873)
 // whereAmI(-33.933, 18.474)
+
+//EVENT LOOP
+
+console.log('test -- START'); //1.
+setTimeout(() => console.log('0 sec timer'), 0)//5. at least 0 sec!!!can be delayed by microtasks
+Promise.resolve('Resolved Promise 1').then(res => console.log(res)); //3.
+
+Promise.resolve('Resolve promise 2').then(res => {
+  for (let i = 0; i < 10000000000; i++){
+
+  }//takes a long time
+  console.log(res)//4
+})
+console.log('test -- END');//2.
