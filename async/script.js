@@ -20,14 +20,12 @@ const getCountry = (country) => {
             <h3 class="country__name">${data.name.official}</h3>
             <h4 class="country__region">${data.region}</h4>
             <p class="country__row"><span>👫</span>${(
-              +data.population / 1000000
-            ).toFixed(1)} M</p>
-            <p class="country__row"><span>🗣️</span>${
-              data.languages[Object.keys(data.languages)[0]]
-            }</p>
-            <p class="country__row"><span>💰</span>${
-              data.currencies[Object.keys(data.currencies)[0]].name
-            }</p>
+        +data.population / 1000000
+      ).toFixed(1)} M</p>
+            <p class="country__row"><span>🗣️</span>${data.languages[Object.keys(data.languages)[0]]
+      }</p>
+            <p class="country__row"><span>💰</span>${data.currencies[Object.keys(data.currencies)[0]].name
+      }</p>
           </div>
         </article>`;
 
@@ -47,14 +45,12 @@ const renderCountry = (data, className = "") => {
             <h3 class="country__name">${data.name.official}</h3>
             <h4 class="country__region">${data.region}</h4>
             <p class="country__row"><span>👫</span>${(
-              +data.population / 1000000
-            ).toFixed(1)} M</p>
-            <p class="country__row"><span>🗣️</span>${
-              data.languages[Object.keys(data.languages)[0]]
-            }</p>
-            <p class="country__row"><span>💰</span>${
-              data.currencies[Object.keys(data.currencies)[0]].name
-            }</p>
+      +data.population / 1000000
+    ).toFixed(1)} M</p>
+            <p class="country__row"><span>🗣️</span>${data.languages[Object.keys(data.languages)[0]]
+    }</p>
+            <p class="country__row"><span>💰</span>${data.currencies[Object.keys(data.currencies)[0]].name
+    }</p>
           </div>
         </article>`;
 
@@ -91,7 +87,7 @@ const getCountryAndNeighbour = (country) => {
 
 getCountryAndNeighbour("usa");
 
-const getJSON = (url, errormsg='Something went wrong.') => {
+const getJSON = (url, errormsg = 'Something went wrong.') => {
   return fetch(url)
     .then(response => {
       if (!response.ok) { // if response.ok is false
@@ -135,17 +131,17 @@ const getCountryDataFetch = (country) => {
       console.error(err)
       renderError(`OOps, something went wrong: ${err.message}`)
     })
-  .finally(()=>{console.log('finally');})
+    .finally(() => { console.log('finally'); })
 }
 
 const getCountryWithHelper = (country) => {
   getJSON(`https://restcountries.com/v3.1/name/${country}`, 'Country not found :(')
-   .then((data) => {
+    .then((data) => {
       renderCountry(data[0])
       const neighbour = data[0].borders?.[0]
       if (!neighbour) throw new Error('no neighbor found');
       return getJSON(`https://restcountries.com/v3.1/alpha/${neighbour}`, 'Neighbour not found')
-   })
+    })
     .then(data => renderCountry(data[0], "neighbour"))
     .catch(err => {
       console.error(err)
@@ -196,8 +192,8 @@ const whereAmI = (lat, lng) => {
       // console.log(`You are in ${data?.city ?? ''}, ${data?.country ?? 'unknown territory'}`);
     })
     .catch((err) => {
-    // console.log(`OOps, something terrible happened`)
-  })
+      // console.log(`OOps, something terrible happened`)
+    })
 }
 
 // whereAmI(52.508, 13.381)
@@ -212,9 +208,42 @@ setTimeout(() => console.log('0 sec timer'), 0)//5. at least 0 sec!!!can be dela
 Promise.resolve('Resolved Promise 1').then(res => console.log(res)); //3.
 
 Promise.resolve('Resolve promise 2').then(res => {
-  for (let i = 0; i < 10000000000; i++){
+  for (let i = 0; i < 10000000; i++) {
 
   }//takes a long time
   console.log(res)//4
 })
 console.log('test -- END');//2.
+
+
+//building a promise
+
+const lotteryPromise = new Promise(function (resolve, reject) {
+  console.log('Wait for it...');
+
+  setTimeout(() => {
+    if (Math.random() >= 0.5) {
+      resolve('You won :)')
+    } else {
+      reject(new Error('You lost'))
+    }
+  }, 3000)
+})
+
+lotteryPromise.then(res => console.log(res)).catch(err => console.error(err));
+
+//promisifying setTimeout
+const wait = function (seconds) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, seconds * 1000)
+  })
+}
+
+wait(3).then(() => {
+  console.log('I waited for 3 seconds');
+  return wait(1)
+})
+  .then(() => console.log('I waited for 1 sec'))
+
+Promise.resolve('This will resolve immediately').then(r => console.log(r))
+Promise.reject('error').catch(err => console.log(err))
