@@ -152,7 +152,7 @@ const getCountryWithHelper = (country) => {
 
 btn.addEventListener('click', () => {
   // getCountryDataFetch('austria')
-  getCountryWithHelper('australia')
+  getCountryWithHelper('hungary')
 })
 
 // getCountryDataFetch('xyxyxy'); //fetch only rejects when there is no internet connection!
@@ -198,7 +198,7 @@ const whereAmI = (lat, lng) => {
 
 // whereAmI(52.508, 13.381)
 // whereAmI(19.037, 72.873)
-whereAmI(190.037, 272.873)
+// whereAmI(190.037, 272.873)
 // whereAmI(-33.933, 18.474)
 
 //EVENT LOOP
@@ -247,3 +247,46 @@ wait(3).then(() => {
 
 Promise.resolve('This will resolve immediately').then(r => console.log(r))
 Promise.reject('error').catch(err => console.log(err))
+
+
+
+//promisifying the geolocation API
+// callback-based API:
+navigator.geolocation.getCurrentPosition(
+  position => console.log(position),
+  err => console.error(err)
+)
+
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    // navigator.geolocation.getCurrentPosition(
+    //   position => resolve(position),
+    //   err => reject(err)
+    // )
+    navigator.geolocation.getCurrentPosition(resolve, reject)
+  })
+}
+
+// getPosition().then(pos => console.log('promise:', pos))
+
+const whereAmI2 = () => {
+  getPosition().then(pos => {
+    const { latitude: lat, longitude: lng } = pos.coords;
+    const url = `https://geocode.xyz/${lat},${lng}?json=1`
+    return fetch(url)
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error(`${res.error?.message ?? "OOps, something went wrong"}`)
+      return res.json()
+    })
+    .then((data) => {
+      // console.log(data);
+      console.log(`You are in ${data?.city ?? ''}, ${data?.country ?? 'unknown territory'}`);
+    })
+    .catch((err) => {
+      console.log(`OOps, something terrible happened`)
+    })
+}
+
+
+whereAmI2()
